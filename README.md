@@ -1,4 +1,4 @@
-# Bridgecrew GCP READ ONLY Integration
+# Bridgecrew GCP ReadOnly Integration
 [![Maintained by Bridgecrew.io](https://img.shields.io/badge/maintained%20by-bridgecrew.io-blueviolet)](https://bridgecrew.io)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/bridgecrewio/terraform-google-read-only.svg?label=latest)](https://github.com/bridgecrewio/terraform-google-bridgecrew-read-only/releases/latest)
 ![Terraform Version](https://img.shields.io/badge/tf-%3E%3D0.12.0-blue.svg)
