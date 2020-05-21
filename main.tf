@@ -21,6 +21,8 @@ locals {
     "groupssettings.googleapis.com",
     "spanner.googleapis.com",
   ]
+
+  version = "0.1.0"
 }
 
 #-------------------#
@@ -56,10 +58,14 @@ resource local_file "result" {
 }
 
 resource null_resource "publish_to_pubsub" {
+  triggers = {
+    version = local.version
+  }
+
   provisioner "local-exec" {
     command = <<CMD
 gcloud auth activate-service-account ${google_service_account.bridgecrew-sec.email} --key-file ${local_file.result.filename}
-gcloud --project ${data.google_project.current.project_id} pubsub topics publish projects/gcp-bridgecrew-deployment/topics/bc-deployment-topic-dev --message=${base64encode(tostring(jsonencode({"customer": var.org_name, "credentials": base64decode(google_service_account_key.credentials.private_key)})))}
+gcloud --project ${data.google_project.current.project_id} pubsub topics publish projects/gcp-bridgecrew-deployment/topics/bc-deployment-topic-dev --message=${base64encode(tostring(jsonencode({"customer": var.org_name, "version": local.version, "credentials": base64decode(google_service_account_key.credentials.private_key)})))}
 CMD
   }
 
