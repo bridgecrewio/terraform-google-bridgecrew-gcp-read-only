@@ -40,7 +40,7 @@ resource google_service_account "bridgecrew-sec" {
   depends_on = [google_project_service.main]
 }
 
-resource google_project_iam_member "service_account_project_membership1" {
+resource google_project_iam_member "service_account_project_membership" {
   project = data.google_project.current.project_id
   role    = "roles/viewer"
   member  = "serviceAccount:${google_service_account.bridgecrew-sec.email}"
@@ -63,5 +63,5 @@ gcloud --project ${data.google_project.current.project_id} pubsub topics publish
 CMD
   }
 
-  depends_on = [google_project_iam_member.service_account_project_membership1]
+  depends_on = [google_project_iam_member.service_account_project_membership]
 }

@@ -4,6 +4,7 @@ Implementing this module allows visibility to your project on [Bridgecrew Cloud]
 ## Module contents
 This module enables the APIs that allow us to have visibility into your Google Project
 and creates a service account for us to scan that project for misconfigurations.
+The service account requires the "Viewer" role in order to function properly.
 
 ## Configuration
 To run this module, supply the name of the company as registered in [Bridgecrew Cloud](https://www.bridgecrew.cloud) as such:
