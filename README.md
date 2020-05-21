@@ -14,7 +14,7 @@ The service account requires the "Viewer" role in order to function properly.
 To run this module, supply the name of the company as registered in [Bridgecrew Cloud](https://www.bridgecrew.cloud) as such:
 ```hcl-terraform
 module "bridgecrew-read-only" {
-  source        = "bridgecrewio/read-only/google"
-  customer_name = "acme"
+  source   = "bridgecrewio/bridgecrew-gcp-read-only/google"
+  org_name = "acme"
 }
 ```
