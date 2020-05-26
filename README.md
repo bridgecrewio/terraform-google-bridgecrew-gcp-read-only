@@ -11,10 +11,19 @@ and creates a service account for us to scan that project for misconfigurations.
 The service account requires the "Viewer" role in order to function properly.
 
 ## Configuration
+
+### Prerequisites
+This module requires the cURL library to be installed on your machine. To check if you have cURL installed, type the following command in your terminal:
+```shell script
+curl --help
+```
+
+### Installation
 To run this module, supply the name of the company as registered in [Bridgecrew Cloud](https://www.bridgecrew.cloud) as such:
 ```hcl-terraform
 module "bridgecrew-read-only" {
-  source   = "bridgecrewio/bridgecrew-gcp-read-only/google"
-  org_name = "acme"
+  source           = "bridgecrewio/bridgecrew-gcp-read-only/google"
+  org_name         = "acme"
+  bridgecrew_token = "YOUR_TOKEN"
 }
 ```

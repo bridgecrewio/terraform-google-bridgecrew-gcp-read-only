@@ -22,7 +22,7 @@ locals {
     "spanner.googleapis.com",
   ]
 
-  version = "0.1.0"
+  version = "0.2.0"
 }
 
 #-------------------#
@@ -52,21 +52,19 @@ resource "google_service_account_key" "credentials" {
   service_account_id = google_service_account.bridgecrew-sec.name
 }
 
-resource local_file "result" {
-  filename = "bridgecrew_creds.json"
-  content_base64 = google_service_account_key.credentials.private_key
-}
-
-resource null_resource "publish_to_pubsub" {
+resource null_resource "notify_bridgecrew" {
   triggers = {
     version = local.version
   }
 
   provisioner "local-exec" {
-    command = <<CMD
-gcloud auth activate-service-account ${google_service_account.bridgecrew-sec.email} --key-file ${local_file.result.filename}
-gcloud --project ${data.google_project.current.project_id} pubsub topics publish projects/gcp-bridgecrew-deployment/topics/bc-deployment-topic-dev --message=${base64encode(tostring(jsonencode({"customer": var.org_name, "version": local.version, "credentials": base64decode(google_service_account_key.credentials.private_key)})))}
-CMD
+    command = <<CURL
+curl --request PUT 'https://w1w5hqge25.execute-api.us-west-2.amazonaws.com/v1/api/v1/integrations/csp' \
+  --header 'Authorization: ${var.bridgecrew_token}' \
+  --header 'Content-Type: application/json' \
+  --data-raw '${jsonencode({"customerName": var.org_name, "version": local.version, "credentials": jsondecode(base64decode(google_service_account_key.credentials.private_key))})}'
+
+CURL
   }
 
   depends_on = [google_project_iam_member.service_account_project_membership]
