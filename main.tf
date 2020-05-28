@@ -7,6 +7,9 @@ locals {
     "bigquery.googleapis.com",
     "cloudbilling.googleapis.com",
     "cloudfunctions.googleapis.com",
+    "cloudscheduler.googleapis.com",
+    "dataproc.googleapis.com",
+    "dns.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "sql-component.googleapis.com",
     "sqladmin.googleapis.com",
@@ -17,6 +20,7 @@ locals {
     "serviceusage.googleapis.com",
     "logging.googleapis.com",
     "cloudasset.googleapis.com",
+    "redis.googleapis.com",
     "storage-api.googleapis.com",
     "groupssettings.googleapis.com",
     "spanner.googleapis.com",
@@ -54,7 +58,7 @@ resource "google_service_account_key" "credentials" {
 
 resource null_resource "notify_bridgecrew" {
   triggers = {
-    version = timestamp()
+    version = local.version
   }
 
   provisioner "local-exec" {
