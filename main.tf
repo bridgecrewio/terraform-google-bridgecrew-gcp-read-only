@@ -69,19 +69,3 @@ CURL
 
   depends_on = [google_project_iam_member.service_account_project_membership]
 }
-
-resource null_resource "notify_bridgecrew_delete" {
-
-  provisioner "local-exec" {
-    when    = "destroy"
-    command = <<CURL
-curl --request PUT 'https://www.bridgecrew.cloud/api/v1/integrations/csp' \
-  --header 'Authorization: ${var.bridgecrew_token}' \
-  --header 'Content-Type: application/json' \
-  --data-raw '${jsonencode({"customerName": var.org_name, "version": local.version, "credentials": jsondecode(base64decode(google_service_account_key.credentials.private_key))})}'
-
-CURL
-  }
-
-  depends_on = [google_project_iam_member.service_account_project_membership]
-}
