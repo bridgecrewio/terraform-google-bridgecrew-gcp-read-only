@@ -10,6 +10,7 @@ locals {
     "cloudscheduler.googleapis.com",
     "dataproc.googleapis.com",
     "dns.googleapis.com",
+    "kms.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "sql-component.googleapis.com",
     "sqladmin.googleapis.com",
