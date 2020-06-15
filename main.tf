@@ -10,7 +10,6 @@ locals {
     "cloudscheduler.googleapis.com",
     "dataproc.googleapis.com",
     "dns.googleapis.com",
-    "kms.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "sql-component.googleapis.com",
     "sqladmin.googleapis.com",
@@ -27,7 +26,7 @@ locals {
     "spanner.googleapis.com",
   ]
 
-  version = "0.2.0"
+  version = "0.2.1"
 }
 
 #-------------------#
