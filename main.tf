@@ -44,6 +44,7 @@ resource "google_project_service" "main" {
 resource google_service_account "bridgecrew-sec" {
   display_name = "${data.google_project.current.name}-bridgecrew-access"
   account_id   = "bridgecrew-gcp-sec"
+  project      = data.google_project.current.project_id
 
   depends_on = [google_project_service.main]
 }
