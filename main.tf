@@ -1,4 +1,6 @@
-data google_project "current" {}
+data google_project "current" {
+  project_id = var.project_id
+}
 
 locals {
   services_list = [
@@ -23,7 +25,7 @@ locals {
     "redis.googleapis.com",
     "storage-api.googleapis.com",
     "groupssettings.googleapis.com",
-    "spanner.googleapis.com",
+    "spanner.googleapis.com"
   ]
 
   version = "0.2.1"
@@ -41,7 +43,7 @@ resource "google_project_service" "main" {
 
 resource google_service_account "bridgecrew-sec" {
   display_name = "${data.google_project.current.name}-bridgecrew-access"
-  account_id = "bridgecrew-gcp-sec"
+  account_id   = "bridgecrew-gcp-sec"
 
   depends_on = [google_project_service.main]
 }
@@ -66,7 +68,7 @@ resource null_resource "notify_bridgecrew" {
 curl --request PUT 'https://www.bridgecrew.cloud/api/v1/integrations/csp' \
   --header 'Authorization: ${var.bridgecrew_token}' \
   --header 'Content-Type: application/json' \
-  --data-raw '${jsonencode({"customerName": var.org_name, "version": local.version, "credentials": jsondecode(base64decode(google_service_account_key.credentials.private_key))})}'
+  --data-raw '${jsonencode({ "customerName" : var.org_name, "version" : local.version, "credentials" : jsondecode(base64decode(google_service_account_key.credentials.private_key)) })}'
 
 CURL
   }
