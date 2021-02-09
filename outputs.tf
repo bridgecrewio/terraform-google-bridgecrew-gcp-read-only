@@ -5,3 +5,7 @@ output "service_account" {
 output "project_membership" {
   value = google_project_iam_member.service_account_project_membership
 }
+
+output "project_service" {
+  value = google_project_service.main
+}
