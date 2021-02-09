@@ -1,35 +1,7 @@
-data google_project "current" {
+data "google_project" "current" {
   project_id = var.project_id
 }
 
-locals {
-  services_list = [
-    "admin.googleapis.com",
-    "appengine.googleapis.com",
-    "bigquery.googleapis.com",
-    "cloudbilling.googleapis.com",
-    "cloudfunctions.googleapis.com",
-    "cloudscheduler.googleapis.com",
-    "dataproc.googleapis.com",
-    "dns.googleapis.com",
-    "cloudresourcemanager.googleapis.com",
-    "sql-component.googleapis.com",
-    "sqladmin.googleapis.com",
-    "compute.googleapis.com",
-    "iam.googleapis.com",
-    "container.googleapis.com",
-    "servicemanagement.googleapis.com",
-    "serviceusage.googleapis.com",
-    "logging.googleapis.com",
-    "cloudasset.googleapis.com",
-    "redis.googleapis.com",
-    "storage-api.googleapis.com",
-    "groupssettings.googleapis.com",
-    "spanner.googleapis.com"
-  ]
-
-  version = "0.2.1"
-}
 
 #-------------------#
 # Activate services #
@@ -41,25 +13,7 @@ resource "google_project_service" "main" {
   disable_on_destroy = false
 }
 
-resource google_service_account "bridgecrew-sec" {
-  display_name = "${data.google_project.current.name}-bridgecrew-access"
-  account_id   = "bridgecrew-gcp-sec"
-  project      = data.google_project.current.project_id
-
-  depends_on = [google_project_service.main]
-}
-
-resource google_project_iam_member "service_account_project_membership" {
-  project = data.google_project.current.project_id
-  role    = "roles/viewer"
-  member  = "serviceAccount:${google_service_account.bridgecrew-sec.email}"
-}
-
-resource "google_service_account_key" "credentials" {
-  service_account_id = google_service_account.bridgecrew-sec.name
-}
-
-resource null_resource "notify_bridgecrew" {
+resource "null_resource" "notify_bridgecrew" {
   triggers = {
     version = local.version
   }
