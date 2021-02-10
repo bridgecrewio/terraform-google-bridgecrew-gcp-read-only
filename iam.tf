@@ -1,4 +1,3 @@
-
 resource "google_service_account" "bridgecrew-sec" {
   display_name = "${data.google_project.current.name}-bridgecrew-access"
   account_id   = "bridgecrew-gcp-sec"
