@@ -10,6 +10,5 @@ variable "bridgecrew_token" {
 
 variable "project_id" {
   type        = string
-  description = "The ID of the project to connect. If not set, default project will be connected"
-  default     = null
+  description = "The ID of the project to connect."
 }
